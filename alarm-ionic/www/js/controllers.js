@@ -5,6 +5,10 @@ angular.module('starter.controllers', [])
 	$scope.alarms = alarms;
 })
 
+.controller('AlarmDetailCtrl', function($scope, $stateParams, Restangular) {
+	$scope.alarm = Restangular.one('alarms', $stateParams.alarmId).get().$object;
+})
+
 .controller('LightsCtrl', function($scope, Restangular) {
 
   $scope.lightStatus = Restangular.one("light").get().$object;

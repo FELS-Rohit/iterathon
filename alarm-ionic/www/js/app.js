@@ -43,15 +43,24 @@ module.config(function($stateProvider, $urlRouterProvider) {
 
 	// Each tab has its own nav history stack:
 
-	.state('tab.alarms', {
-		url : '/alarms',
-		views : {
-			'tab-alarms' : {
-				templateUrl : 'templates/tab-alarms.html',
-				controller : 'AlarmsCtrl'
-			}
-		}
-	})
+  .state('tab.alarms', {
+    url: '/alarms',
+    views: {
+      'tab-alarms': {
+        templateUrl: 'templates/tab-alarms.html',
+        controller: 'AlarmsCtrl'
+      }
+    }
+  })
+  .state('tab.alarm-detail', {
+    url: '/alarm/:alarmId',
+    views: {
+      'tab-alarms': {
+        templateUrl: 'templates/alarm-detail.html',
+        controller: 'AlarmDetailCtrl'
+      }
+    }
+  })
 
 	.state('tab.lights', {
 		url : '/lights',
