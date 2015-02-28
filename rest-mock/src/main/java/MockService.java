@@ -10,6 +10,8 @@ import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 
 public class MockService {
 
+	private WireMockServer server;
+
 	public MockService() {
 	}
 
@@ -19,11 +21,19 @@ public class MockService {
 	}
 
 	private void start() {
-		WireMockServer server = new WireMockServer(8080);
+		server = new WireMockServer(8080);
+
 		server.start();
 
-		server.stubFor(get(urlEqualTo("/alarms")).willReturn(
-				buildResponseFromPropertyFile("get-alarms")));
+		addStub("/alarms", "get-alarms");
+	}
+
+	private void addStub(String url, String propertyKey) {
+		ResponseDefinitionBuilder response = buildResponseFromPropertyFile(propertyKey);
+
+		addCorsHeaders(response);
+
+		server.stubFor(get(urlEqualTo(url)).willReturn(response));
 	}
 
 	private ResponseDefinitionBuilder buildResponseFromPropertyFile(String key) {
@@ -32,11 +42,14 @@ public class MockService {
 			p.load(getClass().getResourceAsStream("/response.properties"));
 			Object value = p.get(key);
 
-			return aResponse().withStatus(200).withBody(value.toString())
-					;
+			return aResponse().withStatus(200).withBody(value.toString());
 		} catch (Exception e) {
 			return buildFailure();
 		}
+	}
+
+	private void addCorsHeaders(ResponseDefinitionBuilder response) {
+		response.withHeader("Access-Control-Allow-Origin", "*");
 	}
 
 	private ResponseDefinitionBuilder buildFailure() {
