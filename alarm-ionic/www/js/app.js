@@ -53,7 +53,7 @@ module.config(function($stateProvider, $urlRouterProvider) {
     }
   })
   .state('tab.alarm-detail', {
-    url: '/alarm/:alarmId',
+    url: '/alarms/:alarmId',
     views: {
       'tab-alarms': {
         templateUrl: 'templates/alarm-detail.html',

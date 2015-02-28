@@ -5,16 +5,23 @@ The FriendsCtrl pulls data from the Friends service (service.js)
 The Friends service returns an array of friend data
 -->
 <ion-view view-title="{{alarm.name}}">
-  <ion-content class="padding">
-	<div class="list">
-		<label class="item item-input item-stacked-label">
-		    <span class="input-label">Name</span>
-		    <input type="text" ng-model="alarm.name" placeholder="Werktags">
-		</label>
-		<label class="item item-input item-stacked-label">
-		    <span class="input-label">Zeit</span>
-		    <input type="time" ng-model="alarm.time" placeholder="Werktags">
-		</label>
-  	</div>
-  </ion-content>
+	<ion-content class="padding">
+		<div class="list">
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">Name</span>
+				<input type="text" ng-model="alarm.name" placeholder="z.B. Werktags">
+			</label>
+			<div class="item range range-positive">
+				<input type="range" name="hour" ng-model="alarm.hour" min="0" max="23">
+				<label ng-bind="alarm.hour">00</label>
+			</div>
+			<div class="item range range-positive">
+				<input type="range" name="minute" ng-model="alarm.minute" min="0" max="59" step="5">
+				<label ng-bind="alarm.minute">00</label>
+			</div>
+			<button class="button button-positive" ng-click="save()">
+				Speichern
+			</button>
+		</div>
+	</ion-content>
 </ion-view>

@@ -1,7 +1,7 @@
 <ion-view view-title="Wecker">
   <ion-content class="padding">
 	<ion-list>
-      <ion-item class="item-alarm" ng-repeat="alarm in alarms" type="item-text-wrap" href="#/tab/alarm/{{alarm.id}}">
+      <ion-item class="item-alarm" ng-repeat="alarm in alarms" type="item-text-wrap" href="#/tab/alarms/{{alarm.id}}">
         <h2>{{alarm.name}} ({{alarm.id}})</h2>
         <span>Uhrzeit: {{alarm.hour}}:{{alarm.minute}}</span>        
       </ion-item>
