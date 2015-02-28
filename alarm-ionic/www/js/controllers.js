@@ -1,10 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('AlarmsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  }
+.controller('AlarmsCtrl', function($scope, Restangular) {
+	var alarms = Restangular.all('alarms').getList().$object;
+	$scope.alarms = alarms;
 })
 
 .controller('LightsCtrl', function($scope, $stateParams) {
