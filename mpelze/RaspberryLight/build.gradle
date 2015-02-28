@@ -1,0 +1,76 @@
+import org.gradle.api.artifacts.*
+
+apply plugin: 'base' // To add "clean" task to the root project.
+
+String raspberryIp = '192.168.240.151'
+
+subprojects {
+    apply from: rootProject.file('common.gradle')
+}
+
+task mergedJavadoc(type: Javadoc, description: 'Creates Javadoc from all the projects.') {
+    title = 'All modules'
+    destinationDir = new File(project.buildDir, 'merged-javadoc')
+
+    // Note: The closures below are executed lazily.
+    source {
+        subprojects*.sourceSets*.main*.allSource
+    }
+    classpath.from {
+        subprojects*.configurations*.compile*.copyRecursive({ !(it instanceof ProjectDependency); })*.resolve()
+    }
+}
+
+// We define a new configuration with the name 'sshAntTask'.
+// This configuration is used to define our dependencies.
+configurations {
+    sshAntTask
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Assign dependencies to the sshAntTask configuration.
+dependencies {
+    sshAntTask group: 'org.apache.ant', name: 'ant-jsch', version: '1.7.1'
+}
+
+task copyToPi << {
+    description = 'Update files on raspberry pi.'
+
+    // Redefine scp Ant task, with the classpath property set to our newly defined
+    // sshAntTask configuration classpath.
+    ant.taskdef(name: 'scp', classname: 'org.apache.tools.ant.taskdefs.optional.ssh.Scp',
+            classpath: configurations.sshAntTask.asPath)
+            
+    // Invoke the scp Ant task. (Use gradle -i update to see the output of the Ant task.)
+    ant.scp(todir: 'pi@'+raspberryIp+':/home/pi/Application',
+            password: 'developer', // Use phassphrase entered by the user.
+            verbose: 'true',
+            trust: 'true') {
+        fileset(dir: 'Service/build/libs') {
+            include(name: '**/*.jar')
+            exclude(name: '**/*sources*')
+        }
+    }            
+}
+
+task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
+    gradleVersion = '2.2.1'
+}
+
+project(':Core'){}
+
+project(':Domain'){
+    dependencies{
+        compile project(':Core')
+    }
+}
+
+project(':Service'){
+    dependencies{
+        compile project(':Core')
+        compile project(':Domain')
+    }
+}
