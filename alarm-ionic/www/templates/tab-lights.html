@@ -6,5 +6,17 @@
           <pre ng-bind="lightStatus | json"></pre>
     </div>
 -->
+
+	<div class="list">
+	  <div class="item range range-assertive">
+	    <input type="range" name="rot" ng-model="lightStatus.red" ng-change="lightColorChange()" min="0" max="255" value="33">
+	  </div>
+	  <div class="item range range-balanced">
+	    <input type="range" name="green" ng-model="lightStatus.green" ng-change="lightColorChange()" min="0" max="255" value="33">
+	  </div>
+	  <div class="item range range-positive">
+	    <input type="range" name="blue" ng-model="lightStatus.blue" ng-change="lightColorChange()" min="0" max="255" value="33">
+	  </div>
+	</div>
   </ion-content>
 </ion-view>
