@@ -3,6 +3,7 @@
 	<ion-list>
       <ion-item class="item-alarm" ng-repeat="alarm in alarms" type="item-text-wrap" href="#/tab/alarm/{{alarm.id}}">
         <h2>{{alarm.name}}</h2>
+        <span ng-bind="{{alarm.id}}">        
       </ion-item>
     </ion-list>    
   </ion-content>

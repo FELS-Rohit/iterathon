@@ -19,10 +19,13 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('SettingsCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('SettingsCtrl', function($scope, Restangular, $cookies) {
+	$scope.settings = { "baseUrl": $cookies.baseUrl};
+	
+	$scope.save = function() {
+		$cookies.baseUrl = $scope.settings.baseUrl;
+		Restangular.setBaseUrl($cookies.baseUrl);
+	}
 });
 
 
