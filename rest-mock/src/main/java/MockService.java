@@ -26,6 +26,7 @@ public class MockService {
 		server.start();
 
 		addStub("/alarms", "get-alarms");
+		addStub("/light", "get-light");
 	}
 
 	private void addStub(String url, String propertyKey) {
