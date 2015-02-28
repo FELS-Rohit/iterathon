@@ -56,16 +56,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           controller: 'LightsCtrl'
         }
       }
-    })
-    .state('tab.light-detail', {
-      url: '/lights/:lightId',
-      views: {
-        'tab-lights': {
-          templateUrl: 'templates/light-detail.html',
-          controller: 'LightDetailCtrl'
-        }
-      }
-    })
+  })
 
   .state('tab.settings', {
     url: '/settings',

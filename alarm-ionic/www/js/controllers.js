@@ -7,13 +7,15 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('LightsCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('LightsCtrl', function($scope, $stateParams) {
+
+  $scope.lightStatus = { on: true };
+
+  $scope.lightStatusChange = function() {
+  	console.log('licht ist ' + ($scope.lightStatus.on?"an":"aus"));
+  };
 })
 
-.controller('LightsDetailCtrl', function($scope, $stateParams, Friends) {
-  $scope.friend = Friends.get($stateParams.friendId);
-})
 
 .controller('SettingsCtrl', function($scope) {
   $scope.settings = {
