@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
 .controller('AlarmDetailCtrl', function($scope, $stateParams, Restangular) {
 	$scope.alarm = Restangular.one('alarms', $stateParams.alarmId).get().$object;
 
-	$scope.click = function() {
+	$scope.save = function() {
 		$scope.alarm.put();
 	}
 
